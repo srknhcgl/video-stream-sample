@@ -6,9 +6,16 @@ const app = express()
 const url = require('url')
 const videoPath=util.format('assets/video')
 const subtitlePath=util.format('assets/subtitle')
+const session=require("express-session")
 
 app.use(express.static(path.join(__dirname, 'public')))
 //app.use(express.static(application_root));
+
+app.use(session({
+  secret: "Özel-Anahtar",
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.get('/', function(req, res) {  
   res.sendFile(path.join(__dirname + '/index.htm'))
@@ -21,11 +28,21 @@ app.get('/next',function(req,res){
   if(req.get('referer')!=undefined){
     currentUrl=req.get('referer');
     }
-	var fileList=fs.readdirSync(videoPath);
-	var videoName=fileList[Math.floor(Math.random()*fileList.length)];
-	var videoId=videoName.substring(0,videoName.length-4);
+	
+  var videoId=getNextVideoId(req);
 	res.json({currentUrl, "videoId":videoId});
 	});
+
+function getNextVideoId(req){
+  if(req.session.fileList==undefined || req.session.fileList.length==0 ){
+    req.session.fileList=fs.readdirSync(videoPath);
+  }
+  
+  var index=Math.floor(Math.random()*req.session.fileList.length);
+  var videoName=req.session.fileList[index];
+  req.session.fileList.splice(index,1);
+  return videoName.substring(0,videoName.length-4);
+}
 
 app.get('/subtitle/:videoId',function(req,res){
 	console.log(req.params.videoId)
