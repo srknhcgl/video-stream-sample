@@ -87,6 +87,9 @@ VPNextj.click(function() {
                VSj.attr("data-id", data.videoId);
                VPj[0].load();
                VPj[0].play();
+
+               DivSubtitlej.text('');
+               IBookIco.show();
            }
            else if (xmlhttp.status == 400) {alert('There was an error 400');}
            else {alert('something else other than 200 was returned');}
@@ -96,9 +99,8 @@ VPNextj.click(function() {
     xmlhttp.send();
    });
 //////////////////////////////////////////
- VPSubtitlej.click(function() {  
-   
-   var id=VSj.data("id");   
+ VPSubtitlej.click(function() {     
+   var id=VSj.attr("data-id");   
    xmlhttp = new XMLHttpRequest();
    xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
