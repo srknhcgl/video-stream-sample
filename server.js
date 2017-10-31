@@ -1,16 +1,46 @@
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
+const util=require('util')
 const app = express()
+const url = require('url')
+const videoPath=util.format('assets/video')
+const subtitlePath=util.format('assets/subtitle')
 
 app.use(express.static(path.join(__dirname, 'public')))
+//app.use(express.static(application_root));
 
-app.get('/', function(req, res) {
+app.get('/', function(req, res) {  
   res.sendFile(path.join(__dirname + '/index.htm'))
+});
+
+app.get('/next',function(req,res){
+	var host=req.get('host');
+  var currentUrl=req.protocol + '://' + host  +'/'; 
+
+  if(req.get('referer')!=undefined){
+    currentUrl=req.get('referer');
+    }
+	var fileList=fs.readdirSync(videoPath);
+	var videoName=fileList[Math.floor(Math.random()*fileList.length)];
+	var videoId=videoName.substring(0,videoName.length-4);
+	res.json({currentUrl, "videoId":videoId});
+	});
+
+app.get('/subtitle/:videoId',function(req,res){
+	console.log(req.params.videoId)
+	const path = util.format('%s/%s.srt',subtitlePath,req.params.videoId)
+	fs.readFile(path, 'utf8', function (err,data) {
+  	if (err) {return console.log(err);}
+  	console.log(data);
+ 	 res.json({data});
+	});
+		
 })
 
-app.get('/video', function(req, res) {
-  const path = 'assets/sample.mp4'
+app.get('/video/:videoId', function(req, res) {	
+  const path = util.format('%s/%s.mp4',videoPath,req.params.videoId)
+  console.log('----------'+path);
   const stat = fs.statSync(path)
   const fileSize = stat.size
   const range = req.headers.range

@@ -1,12 +1,38 @@
 <html>
   <head>
-    <title>Video stream sample</title>
+    <title>russian</title>
   </head>
-  <body>
-    <video id="videoPlayer" controls>
-      <source src="http://localhost:3000/video" type="video/mp4">
+  <body>    
+  
+<link rel="stylesheet" type="text/css" href="css/core.css">
+<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/css/font-awesome.min.css">
+<script src="jquery/dist/jquery.min.js"></script>
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+   
+<div class="container">
+<div class="row">
+
+<div class="col-lg-12">  
+    <video class="center-block" id="videoPlayer" width="600" height="450">
+      <source id="videoSrc" src="" data-id="" type="video/mp4">
     </video>
-    <!-- <button id="toggleButton">Start/Stop</button> -->
-    <script src="index.js"></script>
+    <div id="toggleButton"><i class="fa fa-play-circle-o fa-3x component playButton"></i></div>
+    <div id="btnNext"><i class="fa fa-forward fa-2x component nextButton"></i></div>  
+ </div>
+
+<div class="col-lg-12">
+ <div class="subTitleContainer center-block">
+ <div id="txtSrt" class="subTitleBox">
+ 		<i id="bookIco" class="fa fa fa-book fa-3x component"></i>
+ 		<div id="innerSubTitle"></div>    
+ </div>
+</div>
+</div>
+
+
+</div>
+</div>
+   <script src="index.js"></script>    
   </body>
 </html>
