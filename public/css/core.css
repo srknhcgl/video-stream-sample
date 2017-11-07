@@ -17,6 +17,7 @@ body {
     margin: auto;
     width: 30px;
     height: 30px;
+    font-size: 3em!important;    
 }
 
 .nextButton{
@@ -28,6 +29,11 @@ body {
     margin: auto;
     width: 30px;
     height: 30px;
+    font-size: 2em!important;    
+}
+
+.bookButton{
+    font-size: 3em!important;
 }
 
 .subTitleBox{
@@ -58,14 +64,19 @@ body {
     justify-content: center;
     flex-direction: row;
 }
-.subTitleContainer{
-    display: flex;    
-    justify-content: center;
-    flex-direction: row;
-    width: 600px!important;
-    /*
-    flex-grow: 1;
-    text-align: center;
-    align-items: center;
-       */
+.subTitleContainer{   
+    width: 600px!important;    
+}
+
+@media only screen and (max-width: 500px) {   
+.playButton{ 
+        font-size: 5em!important;    
+}
+.nextButton{
+        font-size: 4em!important;   
+}
+.bookButton{
+        font-size: 5em!important;   
+}
+
 }
